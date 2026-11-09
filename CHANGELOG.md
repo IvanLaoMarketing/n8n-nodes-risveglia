@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 - 2026-11-09
+
+- Prima pubblicazione su npm.
+- URL del repository corretto per la provenance.
+
 ## 0.1.0 - 2026-11-09
 
 Prima versione pubblica.
