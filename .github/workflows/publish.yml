@@ -34,7 +34,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Publish to npm (with provenance)
+      # Trusted Publishing (OIDC): nessun token, npm >= 11.5.1 (Node 24 lo include).
+      - name: Publish to npm (trusted publishing, with provenance)
         run: npm publish --access public --provenance
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
