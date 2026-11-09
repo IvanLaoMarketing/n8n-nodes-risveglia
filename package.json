@@ -1,0 +1,61 @@
+{
+  "name": "@ivanlaomarketing/n8n-nodes-risveglia",
+  "version": "0.1.0",
+  "description": "n8n community node for RisveglIA: WhatsApp messages, contacts and deals, groups and channels, AI agent, media and triggers. Built by Ivan Lao (@ivanlaomarketing).",
+  "keywords": [
+    "n8n-community-node-package",
+    "n8n",
+    "risveglia",
+    "whatsapp",
+    "whatsapp-business",
+    "crm",
+    "marketing-automation",
+    "ivanlaomarketing"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/ivanlaomarketing/n8n-nodes-risveglia#readme",
+  "author": {
+    "name": "Ivan Lao",
+    "email": "info@laoivan.com",
+    "url": "https://laoivan.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanlaomarketing/n8n-nodes-risveglia.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ivanlaomarketing/n8n-nodes-risveglia/issues"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copia-icone.mjs",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "n8n-node lint",
+    "prepublishOnly": "npm run build && npm run lint",
+    "lintfix": "n8n-node lint --fix"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/RisveglIaApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/RisveglIa/RisveglIa.node.js",
+      "dist/nodes/RisveglIa/RisveglIaTrigger.node.js"
+    ]
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "devDependencies": {
+    "@n8n/node-cli": "0.55.6",
+    "@types/node": "24.19.1",
+    "eslint": "9.29.0",
+    "n8n-workflow": "2.46.5",
+    "typescript": "5.9.3"
+  }
+}
