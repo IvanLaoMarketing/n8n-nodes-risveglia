@@ -13,7 +13,7 @@
     "ivanlaomarketing"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/ivanlaomarketing/n8n-nodes-risveglia#readme",
+  "homepage": "https://github.com/IvanLaoMarketing/n8n-nodes-risveglia#readme",
   "author": {
     "name": "Ivan Lao",
     "email": "info@laoivan.com",
@@ -21,10 +21,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ivanlaomarketing/n8n-nodes-risveglia.git"
+    "url": "git+https://github.com/IvanLaoMarketing/n8n-nodes-risveglia.git"
   },
   "bugs": {
-    "url": "https://github.com/ivanlaomarketing/n8n-nodes-risveglia/issues"
+    "url": "https://github.com/IvanLaoMarketing/n8n-nodes-risveglia/issues"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/copia-icone.mjs",
