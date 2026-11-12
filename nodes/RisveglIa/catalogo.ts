@@ -74,6 +74,16 @@ export const operazioni = [
     "binary": false
   },
   {
+    "id": "allegati.testo",
+    "method": "GET",
+    "path": "/v2/allegati/{id}/testo",
+    "scope": "sources:read",
+    "group": "Messaggi",
+    "title": "Testo leggibile di un allegato (PDF, Word, Excel, PowerPoint, TXT, MD, CSV, vocali trascritti)",
+    "idempotent": false,
+    "binary": false
+  },
+  {
     "id": "allegati.file",
     "method": "GET",
     "path": "/v2/allegati/{id}/file",

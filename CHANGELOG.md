@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.0 - 2026-11-12
+
+- Nuova operazione «Testo leggibile di un allegato»: restituisce come testo il contenuto di PDF, Word, Excel, PowerPoint, TXT, MD e CSV, e la trascrizione dei vocali già trascritti. Serve un token con l'ambito Fonti.
+
 ## 0.2.0 - 2026-11-12
 
 - Allegati: elenco degli allegati di un messaggio o di una chat, dati di un allegato e download del file (immagini, vocali, video, documenti) come dato binario.

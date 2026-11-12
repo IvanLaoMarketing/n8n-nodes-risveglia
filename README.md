@@ -37,7 +37,7 @@ Il token dà accesso ai tuoi dati: tienilo riservato e, se non ti serve più, re
 
 - **Chiave di idempotenza.** «Invia un messaggio» e «Crea promemoria» accettano una chiave di idempotenza. Se il workflow ripete la stessa chiamata con la stessa chiave, il messaggio parte una volta sola.
 - **Elenchi.** Le risposte che contengono un elenco arrivano come un solo elemento. Per lavorare un elemento alla volta usa **Split Out**.
-- **Allegati e vocali.** «Allegati» elenca immagini, vocali, video e documenti di un messaggio o di una chat; «Scarica il file di un allegato» li passa ai nodi successivi come dato binario; «Trascrivi un vocale» usa la chiave AI salvata nell'account. Gli id si possono incollare anche nella forma `media:<id>`.
+- **Allegati e vocali.** «Allegati» elenca immagini, vocali, video e documenti di un messaggio o di una chat; «Scarica il file di un allegato» li passa ai nodi successivi come dato binario; «Trascrivi un vocale» usa la chiave AI salvata nell'account. «Testo leggibile di un allegato» restituisce come testo PDF, Word, Excel, PowerPoint, TXT, MD e CSV, oltre ai vocali già trascritti. Gli id si possono incollare anche nella forma `media:<id>`.
 - **Limiti.** Valgono le stesse regole e gli stessi limiti di invio del portale RisveglIA.
 
 ## Sviluppo
