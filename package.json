@@ -1,6 +1,6 @@
 {
   "name": "@ivanlaomarketing/n8n-nodes-risveglia",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "n8n community node for RisveglIA: WhatsApp messages, contacts and deals, groups and channels, AI agent, media and triggers. Built by Ivan Lao (@ivanlaomarketing).",
   "keywords": [
     "n8n-community-node-package",
@@ -13,7 +13,7 @@
     "ivanlaomarketing"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/IvanLaoMarketing/n8n-nodes-risveglia#readme",
+  "homepage": "https://risveglia.it/integrazioni/n8n",
   "author": {
     "name": "Ivan Lao",
     "email": "info@laoivan.com",

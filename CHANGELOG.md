@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 - 2026-11-12
+
+- Allegati: elenco degli allegati di un messaggio o di una chat, dati di un allegato e download del file (immagini, vocali, video, documenti) come dato binario.
+- Trascrizione di un vocale con la chiave AI salvata nell'account (se è già trascritto restituisce il testo senza altra spesa).
+- Gli id degli allegati si possono incollare anche nella forma `media:<id>`.
+- Il token lavora con l'accesso di chi l'ha creato: se la persona perde un permesso, il collegamento lo perde con lei.
+- Testi aggiornati: il token si crea in Impostazioni, Integrazioni. Pagina del nodo: https://risveglia.it/integrazioni/n8n
+
 ## 0.1.2 - 2026-11-09
 
 - Pubblicazione tramite Trusted Publishing npm (OIDC), senza token. Codice invariato.

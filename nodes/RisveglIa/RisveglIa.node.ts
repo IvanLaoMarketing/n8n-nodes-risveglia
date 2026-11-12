@@ -44,6 +44,7 @@ const esempiCorpo: Record<string, IDataObject> = {
 };
 const esempiQuery: Record<string, IDataObject> = {
   "invii.elenca": { conversationId: "" },
+  "allegati.elenca": { messageId: "" },
 };
 
 const nomiParametri: Record<string, { displayName: string; description: string }> = {
@@ -149,8 +150,8 @@ function proprieta(): INodeProperties[] {
     name: "campoFile",
     type: "string",
     default: "data",
-    displayOptions: { show: { operation: ["media.file"] } },
-    description: "Nome del campo binario in cui mettere il file scaricato",
+    displayOptions: { show: { operation: operazioni.filter((o) => o.binary).map((o) => o.id) } },
+    description: "Nome del campo binario in cui mettere il file scaricato (immagine, vocale, video o documento)",
   });
   return props;
 }
@@ -212,11 +213,12 @@ export class RisveglIa implements INodeType {
         if (!op) throw new NodeOperationError(this.getNode(), `Operazione sconosciuta: ${operation}`, { itemIndex: i });
         let path: string = op.path;
         for (const nome of parametriDi(op)) {
-          const valore = String(this.getNodeParameter(`percorso_${nome}`, i)).trim();
+          // Gli allegati compaiono nei messaggi come media:<id>: il prefisso si accetta e si toglie.
+          const valore = String(this.getNodeParameter(`percorso_${nome}`, i)).trim().replace(/^media:/i, "");
           if (!/^[A-Za-z0-9-]{1,64}$/.test(valore)) throw new NodeOperationError(this.getNode(), `Valore non valido per ${nomiParametri[nome]?.displayName ?? nome}.`, { itemIndex: i });
           path = path.replace(`{${nome}}`, valore);
         }
-        const binario = op.id === "media.file";
+        const binario = op.binary;
         const chiave = op.idempotent ? String(this.getNodeParameter("chiaveIdempotenza", i, "")).trim() : "";
         const res = await chiama(this, {
           method: op.method,
@@ -231,7 +233,7 @@ export class RisveglIa implements INodeType {
           const tipo = String(res.headers["content-type"] ?? "application/octet-stream");
           const nomeFile = /filename="?([^";]+)"?/.exec(String(res.headers["content-disposition"] ?? ""))?.[1];
           const dati = await this.helpers.prepareBinaryData(Buffer.from(res.body as ArrayBuffer), nomeFile, tipo);
-          out.push({ json: { id: path.split("/")[3] }, binary: { [campo]: dati }, pairedItem: { item: i } });
+          out.push({ json: { id: path.split("/")[3], fileName: dati.fileName ?? null, mimeType: dati.mimeType, sizeBytes: (res.body as ArrayBuffer).byteLength }, binary: { [campo]: dati }, pairedItem: { item: i } });
           continue;
         }
         const body = res.body;

@@ -1,6 +1,6 @@
 // File generato da scripts/genera-catalogo.ts (pnpm --filter @ivanlaomarketing/n8n-nodes-risveglia genera): non modificarlo a mano.
 
-export const gruppi = ["Messaggi","Contatti e trattative","Gruppi e canali","Agente AI","Media","Campagne e automazioni","Attivatori","Account"] as const;
+export const gruppi = ["Messaggi","Contatti e trattative","Telefonate","Gruppi e canali","Agente AI","Media","Campagne e automazioni","Attivatori","Account"] as const;
 
 export const operazioni = [
   {
@@ -10,7 +10,8 @@ export const operazioni = [
     "scope": "sources:read",
     "group": "Account",
     "title": "Numeri collegati e stato del collegamento",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "invii.crea",
@@ -19,7 +20,8 @@ export const operazioni = [
     "scope": "messages:send",
     "group": "Messaggi",
     "title": "Invia una risposta, una reazione, una modifica o un'eliminazione",
-    "idempotent": true
+    "idempotent": true,
+    "binary": false
   },
   {
     "id": "invii.elenca",
@@ -28,7 +30,8 @@ export const operazioni = [
     "scope": "messages:send",
     "group": "Messaggi",
     "title": "Invii recenti di una chat e il loro stato",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "invii.annulla",
@@ -37,7 +40,8 @@ export const operazioni = [
     "scope": "messages:send",
     "group": "Messaggi",
     "title": "Annulla un invio ancora in attesa",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "invii.impostazioni",
@@ -46,7 +50,48 @@ export const operazioni = [
     "scope": "messages:send",
     "group": "Messaggi",
     "title": "Tetti e fasce orarie degli invii",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "allegati.elenca",
+    "method": "GET",
+    "path": "/v2/allegati",
+    "scope": "sources:read",
+    "group": "Messaggi",
+    "title": "Allegati di un messaggio o di una chat (immagini, vocali, video, documenti)",
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "allegati.dettaglio",
+    "method": "GET",
+    "path": "/v2/allegati/{id}",
+    "scope": "sources:read",
+    "group": "Messaggi",
+    "title": "Dati di un allegato, con il file in base64 (contenuto=base64)",
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "allegati.file",
+    "method": "GET",
+    "path": "/v2/allegati/{id}/file",
+    "scope": "sources:read",
+    "group": "Messaggi",
+    "title": "Scarica il file di un allegato",
+    "idempotent": false,
+    "binary": true
+  },
+  {
+    "id": "vocali.trascrivi",
+    "method": "POST",
+    "path": "/v2/trascrizioni/{id}",
+    "scope": "sources:read",
+    "group": "Messaggi",
+    "title": "Trascrive un vocale con la chiave AI dell'account",
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "etichette.elenca",
@@ -55,7 +100,8 @@ export const operazioni = [
     "scope": "contacts:read",
     "group": "Contatti e trattative",
     "title": "Elenca le etichette",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "etichette.crea",
@@ -64,7 +110,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Crea un'etichetta",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "chat.etichette",
@@ -73,7 +120,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Imposta le etichette di una chat",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "promemoria.crea",
@@ -82,7 +130,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Crea un promemoria",
-    "idempotent": true
+    "idempotent": true,
+    "binary": false
   },
   {
     "id": "promemoria.aggiorna",
@@ -91,7 +140,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Aggiorna o chiude un promemoria",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "promemoria.elimina",
@@ -100,7 +150,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Elimina un promemoria",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "trattative.board",
@@ -109,7 +160,8 @@ export const operazioni = [
     "scope": "opportunities:read",
     "group": "Contatti e trattative",
     "title": "Pipeline, fasi e card delle trattative",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "trattative.card.crea",
@@ -118,7 +170,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Mette una chat in una pipeline",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "trattative.card.sposta",
@@ -127,7 +180,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Sposta o aggiorna una card",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "trattative.card.elimina",
@@ -136,7 +190,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Toglie una card dalla pipeline",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "consensi.registra",
@@ -145,7 +200,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Registra un consenso o una disiscrizione",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "esclusioni.elenca",
@@ -154,7 +210,8 @@ export const operazioni = [
     "scope": "contacts:read",
     "group": "Contatti e trattative",
     "title": "Elenca i numeri esclusi dalle automazioni",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "esclusioni.crea",
@@ -163,7 +220,8 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Esclude un numero dalle automazioni",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "esclusioni.elimina",
@@ -172,7 +230,18 @@ export const operazioni = [
     "scope": "crm:write",
     "group": "Contatti e trattative",
     "title": "Toglie un'esclusione",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "chiamate.rifiuta",
+    "method": "POST",
+    "path": "/v2/chiamate/{id}/rifiuta",
+    "scope": "messages:send",
+    "group": "Telefonate",
+    "title": "Rifiuta una chiamata che sta squillando (solo entro pochi secondi)",
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.elenca",
@@ -181,7 +250,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Elenca gruppi, community e canali",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.dettaglio",
@@ -190,7 +260,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Dettaglio di un gruppo o canale",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.gruppo.crea",
@@ -199,7 +270,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Crea un gruppo",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.canale.crea",
@@ -208,7 +280,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Crea un canale",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.azione",
@@ -217,7 +290,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Impostazioni, amministratori, rimozioni, richieste e link di invito",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.invitabili",
@@ -226,7 +300,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Contatti invitabili in un gruppo",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.inviti.crea",
@@ -235,7 +310,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Mette in coda gli inviti, con i tetti giornalieri",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.inviti.elenca",
@@ -244,7 +320,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Code degli inviti",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.inviti.dettaglio",
@@ -253,7 +330,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Stato di una coda degli inviti",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "spazi.inviti.azione",
@@ -262,7 +340,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Mette in pausa, riprende o annulla una coda degli inviti",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "pubblicazioni.elenca",
@@ -271,7 +350,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Elenca le pubblicazioni",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "pubblicazioni.destinazioni",
@@ -280,7 +360,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Gruppi, canali e stato dove si può pubblicare",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "pubblicazioni.crea",
@@ -289,7 +370,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Crea una pubblicazione in gruppi, canali o stato",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "pubblicazioni.dettaglio",
@@ -298,7 +380,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Dettaglio di una pubblicazione",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "pubblicazioni.azione",
@@ -307,7 +390,8 @@ export const operazioni = [
     "scope": "groups:write",
     "group": "Gruppi e canali",
     "title": "Programma, mette in pausa o annulla una pubblicazione",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "agente.stato",
@@ -316,7 +400,8 @@ export const operazioni = [
     "scope": "agent:write",
     "group": "Agente AI",
     "title": "Impostazioni dell'agente e chat in pausa",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "agente.riprendi",
@@ -325,7 +410,8 @@ export const operazioni = [
     "scope": "agent:write",
     "group": "Agente AI",
     "title": "Fa riprendere l'agente in una chat in pausa",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "media.elenca",
@@ -334,7 +420,8 @@ export const operazioni = [
     "scope": "media:write",
     "group": "Media",
     "title": "Elenca la libreria media",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "media.dettaglio",
@@ -343,7 +430,8 @@ export const operazioni = [
     "scope": "media:write",
     "group": "Media",
     "title": "Dettaglio e stato di una generazione",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "media.file",
@@ -352,7 +440,8 @@ export const operazioni = [
     "scope": "media:write",
     "group": "Media",
     "title": "Scarica il file di un media",
-    "idempotent": false
+    "idempotent": false,
+    "binary": true
   },
   {
     "id": "media.fal",
@@ -361,7 +450,8 @@ export const operazioni = [
     "scope": "media:write",
     "group": "Media",
     "title": "Stato della chiave fal.ai e budget",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "media.stima",
@@ -370,7 +460,8 @@ export const operazioni = [
     "scope": "media:write",
     "group": "Media",
     "title": "Stima il costo di una generazione",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "media.genera",
@@ -379,7 +470,8 @@ export const operazioni = [
     "scope": "media:write",
     "group": "Media",
     "title": "Genera un'immagine o un video con fal.ai",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "template.elenca",
@@ -388,7 +480,8 @@ export const operazioni = [
     "scope": "campaigns:write",
     "group": "Campagne e automazioni",
     "title": "Elenca i modelli di messaggio approvati",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "liste.elenca",
@@ -397,7 +490,8 @@ export const operazioni = [
     "scope": "campaigns:write",
     "group": "Campagne e automazioni",
     "title": "Elenca le liste dei destinatari",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "automazioni.simula",
@@ -406,7 +500,8 @@ export const operazioni = [
     "scope": "automations:write",
     "group": "Campagne e automazioni",
     "title": "Simula un'automazione sugli ultimi 30 giorni",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "automazioni.esecuzioni",
@@ -415,7 +510,8 @@ export const operazioni = [
     "scope": "automations:write",
     "group": "Campagne e automazioni",
     "title": "Elenca le esecuzioni delle automazioni",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "webhook.elenca",
@@ -424,7 +520,8 @@ export const operazioni = [
     "scope": "webhooks:write",
     "group": "Attivatori",
     "title": "Elenca gli indirizzi iscritti",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "webhook.iscrivi",
@@ -433,7 +530,8 @@ export const operazioni = [
     "scope": "webhooks:write",
     "group": "Attivatori",
     "title": "Iscrive un indirizzo alle attività",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "webhook.elimina",
@@ -442,7 +540,8 @@ export const operazioni = [
     "scope": "webhooks:write",
     "group": "Attivatori",
     "title": "Toglie un indirizzo iscritto",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "webhook.prova",
@@ -451,7 +550,8 @@ export const operazioni = [
     "scope": "webhooks:write",
     "group": "Attivatori",
     "title": "Manda un evento di prova",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   },
   {
     "id": "webhook.consegne",
@@ -460,7 +560,8 @@ export const operazioni = [
     "scope": "webhooks:write",
     "group": "Attivatori",
     "title": "Registro delle consegne",
-    "idempotent": false
+    "idempotent": false,
+    "binary": false
   }
 ] as const;
 
@@ -512,5 +613,17 @@ export const eventi = [
   {
     "value": "number.disconnected",
     "name": "Numero scollegato"
+  },
+  {
+    "value": "group.joined",
+    "name": "Ingresso in un gruppo sincronizzato"
+  },
+  {
+    "value": "group.left",
+    "name": "Uscita da un gruppo sincronizzato"
+  },
+  {
+    "value": "group.join_request",
+    "name": "Richiesta di ingresso in un gruppo da approvare"
   }
 ] as const;

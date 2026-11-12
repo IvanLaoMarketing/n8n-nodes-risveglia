@@ -14,6 +14,8 @@ Nodi n8n per [RisveglIA](https://risveglia.it), l'archivio e l'assistente delle 
 - **RisveglIA**: invia messaggi WhatsApp, gestisce contatti e trattative, gruppi e canali, agente AI e media, e legge l'archivio delle chat. Si può usare anche come strumento di un AI Agent.
 - **RisveglIA Trigger**: avvia il workflow quando succede qualcosa in RisveglIA, per esempio un messaggio ricevuto o inviato. L'iscrizione si crea e si cancella da sola quando attivi o spegni il workflow, e ogni evento arriva firmato.
 
+Guida completa: [risveglia.it/integrazioni/n8n](https://risveglia.it/integrazioni/n8n).
+
 ## Installazione
 
 In n8n apri **Settings > Community nodes > Install** e scrivi:
@@ -26,15 +28,16 @@ Il trigger ha bisogno che n8n sia raggiungibile da internet con un indirizzo htt
 
 ## Credenziale
 
-1. In RisveglIA apri **Collegamenti** e crea un **token personale**. Scegli i permessi che servono al workflow: per esempio, per inviare messaggi serve il permesso di invio.
+1. In RisveglIA apri **Impostazioni, Integrazioni** e crea un **token personale**. Scegli i permessi che servono al workflow: per esempio, per inviare messaggi serve il permesso di invio.
 2. In n8n crea una credenziale **RisveglIA API** e incolla il token. L'indirizzo resta quello predefinito, `https://app.risveglia.it/api`.
 
-Il token dà accesso ai tuoi dati: tienilo riservato e, se non ti serve più, revocalo da Collegamenti.
+Il token dà accesso ai tuoi dati: tienilo riservato e, se non ti serve più, revocalo da Impostazioni, Integrazioni. Il token lavora con l'accesso di chi l'ha creato: se quella persona perde un permesso, lo perde anche il token.
 
 ## Note
 
 - **Chiave di idempotenza.** «Invia un messaggio» e «Crea promemoria» accettano una chiave di idempotenza. Se il workflow ripete la stessa chiamata con la stessa chiave, il messaggio parte una volta sola.
 - **Elenchi.** Le risposte che contengono un elenco arrivano come un solo elemento. Per lavorare un elemento alla volta usa **Split Out**.
+- **Allegati e vocali.** «Allegati» elenca immagini, vocali, video e documenti di un messaggio o di una chat; «Scarica il file di un allegato» li passa ai nodi successivi come dato binario; «Trascrivi un vocale» usa la chiave AI salvata nell'account. Gli id si possono incollare anche nella forma `media:<id>`.
 - **Limiti.** Valgono le stesse regole e gli stessi limiti di invio del portale RisveglIA.
 
 ## Sviluppo

@@ -1,7 +1,7 @@
 import type { IAuthenticateGeneric, ICredentialTestRequest, ICredentialType, INodeProperties } from "n8n-workflow";
 
 /**
- * Token personale di RisveglIA (rsv_pat_...): si crea nel portale, Impostazioni, Collegamenti, con gli ambiti che servono
+ * Token personale di RisveglIA (rsv_pat_...): si crea nel portale, Impostazioni, Integrazioni, con gli ambiti che servono
  * al flusso. Il token agisce come la persona che l'ha creato, con il suo ruolo e i suoi permessi di adesso.
  */
 export class RisveglIaApi implements ICredentialType {
@@ -18,7 +18,7 @@ export class RisveglIaApi implements ICredentialType {
       default: "",
       required: true,
       placeholder: "rsv_pat_...",
-      description: "Crealo in RisveglIA: Impostazioni, Collegamenti, Crea un token personale. Si vede una sola volta.",
+      description: "Crealo in RisveglIA: Impostazioni, Integrazioni, Crea un token personale. Si vede una sola volta.",
     },
     {
       displayName: "Indirizzo di RisveglIA",
