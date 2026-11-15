@@ -47,6 +47,121 @@ const esempiQuery: Record<string, IDataObject> = {
   "allegati.elenca": { messageId: "" },
 };
 
+/** «Invia a un numero» ha campi suoi al posto del corpo JSON: numero mittente e template si scelgono da elenchi. */
+export const OPERAZIONE_NUMERO = "numero.invia";
+const suNumero = { show: { operation: [OPERAZIONE_NUMERO] } };
+const coppie = (displayName: string, name: string, description: string): INodeProperties => ({
+  displayName,
+  name,
+  type: "fixedCollection",
+  typeOptions: { multipleValues: true },
+  default: {},
+  displayOptions: suNumero,
+  description,
+  options: [
+    {
+      name: "voce",
+      displayName: "Variabile",
+      values: [
+        { displayName: "Variabile", name: "chiave", type: "string", default: "", description: "1, 2… per il testo, header:1 per l'intestazione, button:0 per un link" },
+        { displayName: "Valore", name: "valore", type: "string", default: "" },
+      ],
+    },
+  ],
+});
+function campiNumero(): INodeProperties[] {
+  return [
+    {
+      // eslint-disable-next-line n8n-nodes-base/node-param-display-name-wrong-for-dynamic-options
+      displayName: "Numero Mittente",
+      name: "numeroMittente",
+      type: "options",
+      typeOptions: { loadOptionsMethod: "numeriCanali" },
+      required: true,
+      default: "",
+      displayOptions: suNumero,
+      // eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-dynamic-options
+      description: "Tra parentesi i canali collegati adesso: QR, API o tutti e due. Scegli dall'elenco o usa un'espressione.",
+    },
+    { displayName: "Telefono Destinatario", name: "telefono", type: "string", default: "", displayOptions: suNumero, description: "Con il prefisso internazionale (senza prefisso vale l'Italia). In alternativa compila la chat." },
+    { displayName: "Chat", name: "chatId", type: "string", default: "", displayOptions: suNumero, description: "ID di una chat già in archivio sul numero mittente, al posto del telefono" },
+    {
+      displayName: "Canale",
+      name: "canale",
+      type: "options",
+      default: "automatico",
+      displayOptions: suNumero,
+      options: [
+        { name: "Automatico", value: "automatico", description: "Con un testo: API se il contatto ha scritto nelle ultime 24 ore, altrimenti QR code. Con un template: API." },
+        { name: "Collegamento Con QR Code", value: "qr" },
+        { name: "WhatsApp Business API", value: "api" },
+      ],
+      description: "Se il canale scelto non è collegato l'invio si rifiuta, senza ripieghi",
+    },
+    { displayName: "Testo", name: "testo", type: "string", typeOptions: { rows: 4 }, default: "", displayOptions: suNumero, description: "Compila il testo oppure il template, non tutti e due" },
+    {
+      // eslint-disable-next-line n8n-nodes-base/node-param-display-name-wrong-for-dynamic-options
+      displayName: "Template",
+      name: "template",
+      type: "options",
+      typeOptions: { loadOptionsMethod: "templateNumero", loadOptionsDependsOn: ["numeroMittente"] },
+      default: "",
+      displayOptions: suNumero,
+      // eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-dynamic-options
+      description: "Solo i template approvati del numero scelto: si creano e si modificano nel portale o da un assistente collegato",
+    },
+    coppie("Variabili del template", "variabili", "Valori delle variabili del template"),
+    { displayName: "File Libreria Media", name: "mediaId", type: "string", default: "", displayOptions: suNumero, description: "ID di un file della libreria: allegato del testo via QR o intestazione del template" },
+    {
+      // eslint-disable-next-line n8n-nodes-base/node-param-display-name-wrong-for-dynamic-options
+      displayName: "Template Alternativo",
+      name: "templateRiserva",
+      type: "options",
+      typeOptions: { loadOptionsMethod: "templateNumero", loadOptionsDependsOn: ["numeroMittente"] },
+      default: "",
+      displayOptions: suNumero,
+      // eslint-disable-next-line n8n-nodes-base/node-param-description-wrong-for-dynamic-options
+      description: "Canale Automatico con un testo, fuori dalle 24 ore e senza QR code: parte questo template invece di rifiutare",
+    },
+    coppie("Variabili del template di riserva", "variabiliRiserva", "Valori delle variabili del template di riserva"),
+    { displayName: "Fonte Consenso", name: "consensoFonte", type: "string", default: "", displayOptions: suNumero, description: "Obbligatoria per il primo messaggio a un numero nuovo: dove ha dato il consenso, per esempio il modulo del sito" },
+    { displayName: "Data Consenso", name: "consensoData", type: "dateTime", default: "", displayOptions: suNumero },
+    {
+      displayName: "Scopo Consenso",
+      name: "consensoScopo",
+      type: "options",
+      default: "utilita",
+      displayOptions: suNumero,
+      options: [
+        { name: "Servizio", value: "utilita" },
+        { name: "Marketing", value: "marketing" },
+      ],
+    },
+  ];
+}
+
+type Coppie = { voce?: { chiave?: string; valore?: string }[] };
+const daCoppie = (v: Coppie | undefined) => {
+  const voci = (v?.voce ?? []).filter((x) => x.chiave?.trim());
+  return voci.length ? Object.fromEntries(voci.map((x) => [x.chiave!.trim(), x.valore ?? ""])) : undefined;
+};
+
+/** Corpo di «Invia a un numero» dai campi del nodo: i campi vuoti non si mandano. */
+export function corpoNumero(get: (nome: string) => unknown): IDataObject {
+  const t = (nome: string) => String(get(nome) ?? "").trim();
+  const body: IDataObject = { numberId: t("numeroMittente"), channel: t("canale") || "automatico" };
+  for (const [campo, chiave] of [["telefono", "phone"], ["chatId", "chatId"], ["testo", "text"], ["template", "templateId"], ["mediaId", "mediaId"], ["templateRiserva", "fallbackTemplateId"]] as const) {
+    const v = t(campo);
+    if (v) body[chiave] = v;
+  }
+  const variables = daCoppie(get("variabili") as Coppie);
+  if (variables) body.variables = variables;
+  const fallbackVariables = daCoppie(get("variabiliRiserva") as Coppie);
+  if (fallbackVariables) body.fallbackVariables = fallbackVariables;
+  if (t("consensoFonte")) body.consent = { source: t("consensoFonte"), date: t("consensoData") || new Date().toISOString(), purpose: t("consensoScopo") || "utilita" };
+  return body;
+}
+
 const nomiParametri: Record<string, { displayName: string; description: string }> = {
   id: { displayName: "ID", description: "Identificativo dell'elemento, come lo restituisce un'altra operazione di RisveglIA" },
   azione: { displayName: "Azione", description: "Nome dell'azione, come indicato nella guida dell'operazione" },
@@ -117,7 +232,9 @@ function proprieta(): INodeProperties[] {
       description: nomiParametri[nome]?.description ?? "",
     });
   }
+  props.push(...campiNumero());
   for (const op of operazioni) {
+    if (op.id === OPERAZIONE_NUMERO) continue;
     if (conCorpo(op))
       props.push({
         displayName: "Corpo (JSON)",
@@ -194,6 +311,20 @@ export class RisveglIa implements INodeType {
         const tools = (res.body as { tools?: { name: string; title?: string; description?: string }[] }).tools ?? [];
         return tools.map((t) => ({ name: t.title || t.name, value: t.name, description: t.description }));
       },
+      /** Numeri mittenti con i canali collegati adesso. */
+      async numeriCanali(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+        const res = await chiama(this, { method: "GET", path: "/api/v2/invii/numero/canali" });
+        const numbers = (res.body as { numbers?: { id: string; label: string; channels: string }[] }).numbers ?? [];
+        return numbers.map((n) => ({ name: `${n.label} (${n.channels})`, value: n.id }));
+      },
+      /** Template approvati del numero scelto: solo questi, gli altri non si possono mandare. */
+      async templateNumero(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+        const numero = String(this.getCurrentNodeParameter("numeroMittente") ?? "");
+        const res = await chiama(this, { method: "GET", path: "/api/v2/invii/numero/canali" });
+        const numbers = (res.body as { numbers?: { id: string; templates: { id: string; name: string; language: string; category: string; preview: string }[] }[] }).numbers ?? [];
+        const templates = numbers.find((n) => n.id === numero)?.templates ?? [];
+        return [{ name: "Nessuno", value: "" }, ...templates.map((t) => ({ name: `${t.name} · ${t.language.toUpperCase()} · ${t.category}`, value: t.id, description: t.preview.slice(0, 200) }))];
+      },
     },
   };
 
@@ -223,7 +354,11 @@ export class RisveglIa implements INodeType {
         const res = await chiama(this, {
           method: op.method,
           path: `/api${path}`,
-          ...(conCorpo(op) ? { body: json(this, "corpo", i) } : { qs: json(this, "parametri", i) }),
+          ...(op.id === OPERAZIONE_NUMERO
+            ? { body: corpoNumero((nome) => this.getNodeParameter(nome, i, "")) }
+            : conCorpo(op)
+              ? { body: json(this, "corpo", i) }
+              : { qs: json(this, "parametri", i) }),
           binario,
           ...(chiave ? { headers: { "Idempotency-Key": chiave } } : {}),
           itemIndex: i,

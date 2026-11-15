@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0 - 2026-11-15
+
+- Nuova operazione «Invia a un numero», anche a un numero mai scritto prima: testo (con allegato) via QR oppure template approvato con variabili via API, canale Automatico, QR o API senza ripieghi silenziosi, template alternativo fuori dalle 24 ore, chiave di idempotenza.
+- Primo messaggio a un contatto nuovo: serve un token con il permesso «Primo messaggio a contatti nuovi» e la fonte e la data del consenso. Valgono la fascia 8-21 e i tetti giornalieri dell'account.
+- Nuove letture: numeri mittenti con i canali collegati e i template approvati, stato di un invio a un numero.
+
 ## 0.3.0 - 2026-11-12
 
 - Nuova operazione «Testo leggibile di un allegato»: restituisce come testo il contenuto di PDF, Word, Excel, PowerPoint, TXT, MD e CSV, e la trascrizione dei vocali già trascritti. Serve un token con l'ambito Fonti.

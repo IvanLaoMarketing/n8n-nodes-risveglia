@@ -54,6 +54,36 @@ export const operazioni = [
     "binary": false
   },
   {
+    "id": "numero.canali",
+    "method": "GET",
+    "path": "/v2/invii/numero/canali",
+    "scope": "messages:send",
+    "group": "Messaggi",
+    "title": "Numeri mittenti con i canali collegati (QR, API) e modelli approvati",
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "numero.invia",
+    "method": "POST",
+    "path": "/v2/invii/numero",
+    "scope": "messages:send",
+    "group": "Messaggi",
+    "title": "Invia a un numero, anche nuovo (testo o modello, QR o API)",
+    "idempotent": true,
+    "binary": false
+  },
+  {
+    "id": "numero.dettaglio",
+    "method": "GET",
+    "path": "/v2/invii/numero/{id}",
+    "scope": "messages:send",
+    "group": "Messaggi",
+    "title": "Stato di un invio a un numero",
+    "idempotent": false,
+    "binary": false
+  },
+  {
     "id": "allegati.elenca",
     "method": "GET",
     "path": "/v2/allegati",
