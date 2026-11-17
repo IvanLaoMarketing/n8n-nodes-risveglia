@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0 - 2026-11-17
+
+- Il nodo manda a ogni chiamata la sua versione (intestazione `X-Risveglia-Client: n8n/0.5.0`): RisveglIA riconosce la versione in uso e ti avvisa nel portale e per email quando ne esce una nuova, con cosa cambia e cosa fare.
+- Per aggiornare: in n8n apri Impostazioni › Nodi della community, premi «Aggiorna» accanto a @ivanlaomarketing/n8n-nodes-risveglia e ricarica l'editor. I flussi già salvati continuano a funzionare.
+
 ## 0.4.0 - 2026-11-15
 
 - Nuova operazione «Invia a un numero», anche a un numero mai scritto prima: testo (con allegato) via QR oppure template approvato con variabili via API, canale Automatico, QR o API senza ripieghi silenziosi, template alternativo fuori dalle 24 ore, chiave di idempotenza.

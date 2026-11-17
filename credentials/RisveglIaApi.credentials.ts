@@ -1,4 +1,5 @@
 import type { IAuthenticateGeneric, ICredentialTestRequest, ICredentialType, INodeProperties } from "n8n-workflow";
+import { CLIENTE } from "../nodes/RisveglIa/versione";
 
 /**
  * Token personale di RisveglIA (rsv_pat_...): si crea nel portale, Impostazioni, Integrazioni, con gli ambiti che servono
@@ -31,7 +32,8 @@ export class RisveglIaApi implements ICredentialType {
 
   authenticate: IAuthenticateGeneric = {
     type: "generic",
-    properties: { headers: { Authorization: "=Bearer {{$credentials.token}}" } },
+    // X-Risveglia-Client: versione del nodo per gli avvisi di aggiornamento, su ogni chiamata (azioni, attivatore, prova).
+    properties: { headers: { Authorization: "=Bearer {{$credentials.token}}", "X-Risveglia-Client": CLIENTE } },
   };
 
   test: ICredentialTestRequest = {
