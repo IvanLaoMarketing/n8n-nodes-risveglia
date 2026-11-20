@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.6.0 - 2026-11-20
+
+- «Crea invio» e «Invia a un numero» accettano il campo «Contenuto (JSON)»: foto, video, documenti e vocali dalla libreria media, sondaggi, posizione e scheda contatto con il collegamento QR; pulsanti, lista, link, posizione, contatto e file con WhatsApp Business API entro 24 ore dall'ultimo messaggio del contatto.
+- Nuova operazione «Importa un file da link»: carica nella libreria media un file da un indirizzo web e ne restituisce l'id da usare negli invii.
+- Valgono gli stessi tetti, fasce orarie e permessi del portale. Per aggiornare: Impostazioni › Nodi della community › «Aggiorna», poi ricarica l'editor. I flussi già salvati continuano a funzionare.
+
 ## 0.5.0 - 2026-11-17
 
 - Il nodo manda a ogni chiamata la sua versione (intestazione `X-Risveglia-Client: n8n/0.5.0`): RisveglIA riconosce la versione in uso e ti avvisa nel portale e per email quando ne esce una nuova, con cosa cambia e cosa fare.

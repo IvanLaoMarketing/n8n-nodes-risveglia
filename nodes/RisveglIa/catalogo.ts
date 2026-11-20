@@ -19,7 +19,7 @@ export const operazioni = [
     "path": "/v2/invii",
     "scope": "messages:send",
     "group": "Messaggi",
-    "title": "Invia una risposta, una reazione, una modifica o un'eliminazione",
+    "title": "Invia in una chat: testo, file della libreria (foto, video, documento, vocale), sondaggio, posizione, contatto, reazione, modifica o eliminazione",
     "idempotent": true,
     "binary": false
   },
@@ -69,7 +69,7 @@ export const operazioni = [
     "path": "/v2/invii/numero",
     "scope": "messages:send",
     "group": "Messaggi",
-    "title": "Invia a un numero, anche nuovo (testo o modello, QR o API)",
+    "title": "Invia a un numero, anche nuovo (testo, file, sondaggio, posizione, contatto, pulsanti, lista, link o modello; QR o API)",
     "idempotent": true,
     "binary": false
   },
@@ -514,6 +514,16 @@ export const operazioni = [
     "binary": false
   },
   {
+    "id": "media.da-link",
+    "method": "POST",
+    "path": "/v2/media/da-link",
+    "scope": "media:write",
+    "group": "Media",
+    "title": "Importa un file da un link nella libreria, per mandarlo in chat",
+    "idempotent": false,
+    "binary": false
+  },
+  {
     "id": "template.elenca",
     "method": "GET",
     "path": "/v2/waba/template",
@@ -665,5 +675,13 @@ export const eventi = [
   {
     "value": "group.join_request",
     "name": "Richiesta di ingresso in un gruppo da approvare"
+  },
+  {
+    "value": "chat.assigned",
+    "name": "Chat assegnata a una persona del team (a mano o a turno)"
+  },
+  {
+    "value": "agent.handoff",
+    "name": "L'agente AI passa la chat a una persona"
   }
 ] as const;

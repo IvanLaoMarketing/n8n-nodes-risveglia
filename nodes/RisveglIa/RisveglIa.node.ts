@@ -1,6 +1,7 @@
 import {
   NodeConnectionTypes,
   NodeOperationError,
+  UserError,
   type IDataObject,
   type IExecuteFunctions,
   type ILoadOptionsFunctions,
@@ -41,7 +42,13 @@ const esempiCorpo: Record<string, IDataObject> = {
   "trattative.card.crea": { chatId: "" },
   "trattative.card.sposta": { stageId: "", version: 1 },
   "webhook.iscrivi": { name: "", url: "https://", events: [] },
+  "media.da-link": { url: "https://", name: "" },
 };
+/** Come scrivere il corpo di «Invia in una chat» per i tipi diversi dal testo: si mostra sopra il campo. */
+const guidaInviiCrea =
+  'Testo: {"kind":"testo","conversationId":"…","text":"…"}. File della libreria (foto, video, documento, vocale): {"kind":"allegato","conversationId":"…","mediaId":"…","caption":"…","asVoiceNote":true}. ' +
+  'Sondaggio: {"kind":"contenuto","conversationId":"…","content":{"type":"sondaggio","question":"…","options":["Sì","No"],"multipleAnswers":false}}. ' +
+  'Posizione: {"type":"posizione","latitude":43.77,"longitude":11.25,"name":"…"}. Contatto: {"type":"contatto","name":"…","phone":"+39…"}. Il sondaggio va solo con il QR code; un file da un link si importa prima con «Importa un file da un link».';
 const esempiQuery: Record<string, IDataObject> = {
   "invii.elenca": { conversationId: "" },
   "allegati.elenca": { messageId: "" },
@@ -98,7 +105,16 @@ function campiNumero(): INodeProperties[] {
       ],
       description: "Se il canale scelto non è collegato l'invio si rifiuta, senza ripieghi",
     },
-    { displayName: "Testo", name: "testo", type: "string", typeOptions: { rows: 4 }, default: "", displayOptions: suNumero, description: "Compila il testo oppure il template, non tutti e due" },
+    { displayName: "Testo", name: "testo", type: "string", typeOptions: { rows: 4 }, default: "", displayOptions: suNumero, description: "Compila il testo, il contenuto o il template: uno solo" },
+    {
+      displayName: "Contenuto (JSON)",
+      name: "contenuto",
+      type: "json",
+      default: "",
+      displayOptions: suNumero,
+      description:
+        'Al posto del testo: sondaggio e contatto via QR; pulsanti, lista e link via API nelle 24 ore; posizione su tutti e due. Esempio: {"type":"pulsanti","body":"Confermi?","buttons":[{"title":"Sì"},{"title":"No"}]}.',
+    },
     {
       // eslint-disable-next-line n8n-nodes-base/node-param-display-name-wrong-for-dynamic-options
       displayName: "Template",
@@ -111,7 +127,7 @@ function campiNumero(): INodeProperties[] {
       description: "Solo i template approvati del numero scelto: si creano e si modificano nel portale o da un assistente collegato",
     },
     coppie("Variabili del template", "variabili", "Valori delle variabili del template"),
-    { displayName: "File Libreria Media", name: "mediaId", type: "string", default: "", displayOptions: suNumero, description: "ID di un file della libreria: allegato del testo via QR o intestazione del template" },
+    { displayName: "File Libreria Media", name: "mediaId", type: "string", default: "", displayOptions: suNumero, description: "ID di un file della libreria (foto, video, documento o vocale): da solo o con il testo come didascalia, o intestazione del template" },
     {
       // eslint-disable-next-line n8n-nodes-base/node-param-display-name-wrong-for-dynamic-options
       displayName: "Template Alternativo",
@@ -146,6 +162,23 @@ const daCoppie = (v: Coppie | undefined) => {
   return voci.length ? Object.fromEntries(voci.map((x) => [x.chiave!.trim(), x.valore ?? ""])) : undefined;
 };
 
+/** Il campo «Contenuto (JSON)» arriva come testo o come oggetto: vuoto vale nessun contenuto. */
+function contenutoDi(v: unknown): IDataObject | undefined {
+  if (v && typeof v === "object" && !Array.isArray(v)) return Object.keys(v).length ? (v as IDataObject) : undefined;
+  const testo = String(v ?? "").trim();
+  if (!testo || testo === "{}") return undefined;
+  const nonValido = Symbol("non valido");
+  let valore: unknown;
+  try {
+    valore = JSON.parse(testo);
+  } catch {
+    valore = nonValido;
+  }
+  if (valore === nonValido) throw new UserError("Contenuto (JSON) non è un JSON valido.");
+  if (!valore || typeof valore !== "object" || Array.isArray(valore)) throw new UserError("Contenuto (JSON) deve essere un oggetto, per esempio {\"type\":\"posizione\",…}.");
+  return valore as IDataObject;
+}
+
 /** Corpo di «Invia a un numero» dai campi del nodo: i campi vuoti non si mandano. */
 export function corpoNumero(get: (nome: string) => unknown): IDataObject {
   const t = (nome: string) => String(get(nome) ?? "").trim();
@@ -154,6 +187,8 @@ export function corpoNumero(get: (nome: string) => unknown): IDataObject {
     const v = t(campo);
     if (v) body[chiave] = v;
   }
+  const content = contenutoDi(get("contenuto"));
+  if (content) body.content = content;
   const variables = daCoppie(get("variabili") as Coppie);
   if (variables) body.variables = variables;
   const fallbackVariables = daCoppie(get("variabiliRiserva") as Coppie);
@@ -235,6 +270,8 @@ function proprieta(): INodeProperties[] {
   props.push(...campiNumero());
   for (const op of operazioni) {
     if (op.id === OPERAZIONE_NUMERO) continue;
+    if (op.id === "invii.crea")
+      props.push({ displayName: guidaInviiCrea, name: "guidaInviiCrea", type: "notice", default: "", displayOptions: { show: { operation: [op.id] } } });
     if (conCorpo(op))
       props.push({
         displayName: "Corpo (JSON)",
