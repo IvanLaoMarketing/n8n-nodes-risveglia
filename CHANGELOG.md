@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0 - 2026-11-20
+
+- Eventi WhatsApp: «Invia in una chat» con kind evento manda un evento (nome, giorno, ora, luogo, descrizione) in una chat o in un gruppo dei numeri collegati con il QR code. Chi lo riceve risponde «Ci sarò», «Non ci sarò» o «Forse».
+- Nuova lettura «Eventi mandati in una chat con le risposte»: quante risposte per ogni scelta, chi ha risposto e quanti ospiti porta.
+- Nuova operazione «Carica o sostituisci un file nelle fonti»: carica un testo, un PDF o un Word nei File e documenti che l'agente AI consulta. Con lo stesso nome sostituisce il file precedente appena il nuovo è pronto; se il contenuto non è cambiato non carica nulla. Serve il permesso «File e documenti» sul token.
+- Per aggiornare: Impostazioni › Nodi della community › «Aggiorna», poi ricarica l'editor. I flussi già salvati continuano a funzionare.
+
 ## 0.6.0 - 2026-11-20
 
 - «Crea invio» e «Invia a un numero» accettano il campo «Contenuto (JSON)»: foto, video, documenti e vocali dalla libreria media, sondaggi, posizione e scheda contatto con il collegamento QR; pulsanti, lista, link, posizione, contatto e file con WhatsApp Business API entro 24 ore dall'ultimo messaggio del contatto.

@@ -43,7 +43,12 @@ const esempiCorpo: Record<string, IDataObject> = {
   "trattative.card.sposta": { stageId: "", version: 1 },
   "webhook.iscrivi": { name: "", url: "https://", events: [] },
   "media.da-link": { url: "https://", name: "" },
+  "fonti.carica": { name: "file.md", content: "" },
 };
+/** Come tenere aggiornato un file delle fonti: si mostra sopra il campo di «Carica o sostituisci un file». */
+const guidaFontiCarica =
+  'Testo: {"name":"dati-azienda.md","content":"…"} (.md o .txt). PDF o Word: passalo prima da «Extract from File», operazione «Move File to Base64 String», e metti il risultato in {"name":"listino.pdf","contentBase64":"…"}, al massimo 2,5 MB. ' +
+  "Con lo stesso nome il file nuovo sostituisce il precedente appena è pronto; se il contenuto non è cambiato non si carica nulla (outcome «invariato»). Va nelle fonti generali dell'agente.";
 /** Come scrivere il corpo di «Invia in una chat» per i tipi diversi dal testo: si mostra sopra il campo. */
 const guidaInviiCrea =
   'Testo: {"kind":"testo","conversationId":"…","text":"…"}. File della libreria (foto, video, documento, vocale): {"kind":"allegato","conversationId":"…","mediaId":"…","caption":"…","asVoiceNote":true}. ' +
@@ -52,6 +57,7 @@ const guidaInviiCrea =
 const esempiQuery: Record<string, IDataObject> = {
   "invii.elenca": { conversationId: "" },
   "allegati.elenca": { messageId: "" },
+  "eventi.elenca": { conversationId: "" },
 };
 
 /** «Invia a un numero» ha campi suoi al posto del corpo JSON: numero mittente e template si scelgono da elenchi. */
@@ -272,6 +278,8 @@ function proprieta(): INodeProperties[] {
     if (op.id === OPERAZIONE_NUMERO) continue;
     if (op.id === "invii.crea")
       props.push({ displayName: guidaInviiCrea, name: "guidaInviiCrea", type: "notice", default: "", displayOptions: { show: { operation: [op.id] } } });
+    if (op.id === "fonti.carica")
+      props.push({ displayName: guidaFontiCarica, name: "guidaFontiCarica", type: "notice", default: "", displayOptions: { show: { operation: [op.id] } } });
     if (conCorpo(op))
       props.push({
         displayName: "Corpo (JSON)",

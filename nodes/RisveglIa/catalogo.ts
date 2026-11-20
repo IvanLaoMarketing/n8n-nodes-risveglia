@@ -1,6 +1,6 @@
 // File generato da scripts/genera-catalogo.ts (pnpm --filter @ivanlaomarketing/n8n-nodes-risveglia genera): non modificarlo a mano.
 
-export const gruppi = ["Messaggi","Contatti e trattative","Telefonate","Gruppi e canali","Agente AI","Media","Campagne e automazioni","Attivatori","Account"] as const;
+export const gruppi = ["Messaggi","Contatti e trattative","Telefonate","Gruppi e canali","Agente AI","Fonti","Media","Campagne e automazioni","Attivatori","Account"] as const;
 
 export const operazioni = [
   {
@@ -19,7 +19,7 @@ export const operazioni = [
     "path": "/v2/invii",
     "scope": "messages:send",
     "group": "Messaggi",
-    "title": "Invia in una chat: testo, file della libreria (foto, video, documento, vocale), sondaggio, posizione, contatto, reazione, modifica o eliminazione",
+    "title": "Invia in una chat: testo, file della libreria (foto, video, documento, vocale), sondaggio, posizione, contatto, evento, reazione, modifica o eliminazione",
     "idempotent": true,
     "binary": false
   },
@@ -50,6 +50,16 @@ export const operazioni = [
     "scope": "messages:send",
     "group": "Messaggi",
     "title": "Tetti e fasce orarie degli invii",
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "eventi.elenca",
+    "method": "GET",
+    "path": "/v2/eventi-whatsapp",
+    "scope": "sources:read",
+    "group": "Messaggi",
+    "title": "Eventi mandati in una chat con le risposte (Ci sarò, Non ci sarò, Forse)",
     "idempotent": false,
     "binary": false
   },
@@ -450,6 +460,36 @@ export const operazioni = [
     "scope": "agent:write",
     "group": "Agente AI",
     "title": "Fa riprendere l'agente in una chat in pausa",
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "fonti.elenca",
+    "method": "GET",
+    "path": "/v2/files",
+    "scope": "sources:write",
+    "group": "Fonti",
+    "title": "Elenca i file delle fonti con stato e versione",
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "fonti.dettaglio",
+    "method": "GET",
+    "path": "/v2/files/{id}",
+    "scope": "sources:write",
+    "group": "Fonti",
+    "title": "Stato di un file delle fonti (in elaborazione, pronto, non leggibile)",
+    "idempotent": false,
+    "binary": false
+  },
+  {
+    "id": "fonti.carica",
+    "method": "POST",
+    "path": "/v2/files/fonte",
+    "scope": "sources:write",
+    "group": "Fonti",
+    "title": "Carica o sostituisci un file nelle fonti: con lo stesso nome sostituisce il precedente quando il nuovo è pronto",
     "idempotent": false,
     "binary": false
   },
