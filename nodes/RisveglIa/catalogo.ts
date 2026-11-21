@@ -44,6 +44,16 @@ export const operazioni = [
     "binary": false
   },
   {
+    "id": "chat.letta",
+    "method": "PUT",
+    "path": "/v2/chats/{id}/letta",
+    "scope": "messages:send",
+    "group": "Messaggi",
+    "title": "Segna una chat come letta fino a un messaggio (spunte blu se accese sul numero)",
+    "idempotent": false,
+    "binary": false
+  },
+  {
     "id": "invii.impostazioni",
     "method": "GET",
     "path": "/v2/invii/impostazioni",
@@ -81,6 +91,16 @@ export const operazioni = [
     "group": "Messaggi",
     "title": "Invia a un numero, anche nuovo (testo, file, sondaggio, posizione, contatto, pulsanti, lista, link o modello; QR o API)",
     "idempotent": true,
+    "binary": false
+  },
+  {
+    "id": "numero.verifica",
+    "method": "GET",
+    "path": "/v2/invii/numero/verifica",
+    "scope": "messages:send",
+    "group": "Messaggi",
+    "title": "Il numero è su WhatsApp? (solo controllo, non scrive nulla)",
+    "idempotent": false,
     "binary": false
   },
   {

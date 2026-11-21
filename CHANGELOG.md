@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0 - 2026-11-21
+
+- Nuova operazione «Il numero è su WhatsApp?»: prima di scrivere a un contatto nuovo sai se il numero usa WhatsApp.
+- Nuova operazione «Segna una chat come letta»: un flusso segna come letti i messaggi di una chat che ha già gestito. Se il collegamento con il QR code è fermo, aspetta che torni.
+- Invii con canale Automatico in una chat già aperta: se il QR è fermo il messaggio parte dall'API ufficiale, solo nelle 24 ore dall'ultimo messaggio del contatto, e torna al QR quando è di nuovo stabile. Fuori dalle 24 ore l'invio si rifiuta con un errore chiaro.
+- Per aggiornare: Impostazioni › Nodi della community › «Aggiorna», poi ricarica l'editor. I flussi già salvati continuano a funzionare.
+
 ## 0.7.0 - 2026-11-20
 
 - Eventi WhatsApp: «Invia in una chat» con kind evento manda un evento (nome, giorno, ora, luogo, descrizione) in una chat o in un gruppo dei numeri collegati con il QR code. Chi lo riceve risponde «Ci sarò», «Non ci sarò» o «Forse».

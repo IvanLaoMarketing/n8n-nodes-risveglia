@@ -109,7 +109,7 @@ function campiNumero(): INodeProperties[] {
         { name: "Collegamento Con QR Code", value: "qr" },
         { name: "WhatsApp Business API", value: "api" },
       ],
-      description: "Se il canale scelto non è collegato l'invio si rifiuta, senza ripieghi",
+      description: "Con Automatico, in una chat già aperta, se un canale è fermo si passa all'altro (API solo nelle 24 ore). Con QR o API scelti l'invio si rifiuta, senza ripieghi.",
     },
     { displayName: "Testo", name: "testo", type: "string", typeOptions: { rows: 4 }, default: "", displayOptions: suNumero, description: "Compila il testo, il contenuto o il template: uno solo" },
     {
