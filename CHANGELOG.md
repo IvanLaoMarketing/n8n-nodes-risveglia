@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.0 - 2026-11-23
+
+- Nuova opzione «Scritto Da Una Persona» in «Invia a un numero»: se il testo l'ha scritto a mano un operatore, per esempio da un CRM, l'agente AI va in pausa in quella chat come quando scrivi dal portale.
+- Per aggiornare: Impostazioni › Nodi della community › «Aggiorna», poi ricarica l'editor. I flussi già salvati continuano a funzionare.
+
 ## 0.8.0 - 2026-11-21
 
 - Nuova operazione «Il numero è su WhatsApp?»: prima di scrivere a un contatto nuovo sai se il numero usa WhatsApp.

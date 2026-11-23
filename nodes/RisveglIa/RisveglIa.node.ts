@@ -159,6 +159,14 @@ function campiNumero(): INodeProperties[] {
         { name: "Marketing", value: "marketing" },
       ],
     },
+    {
+      displayName: "Scritto Da Una Persona",
+      name: "scrittoDaPersona",
+      type: "boolean",
+      default: false,
+      displayOptions: suNumero,
+      description: "Whether the text was written by hand by an operator (for example from a CRM): the AI agent pauses in that chat as if you had written from the portal",
+    },
   ];
 }
 
@@ -200,6 +208,7 @@ export function corpoNumero(get: (nome: string) => unknown): IDataObject {
   const fallbackVariables = daCoppie(get("variabiliRiserva") as Coppie);
   if (fallbackVariables) body.fallbackVariables = fallbackVariables;
   if (t("consensoFonte")) body.consent = { source: t("consensoFonte"), date: t("consensoData") || new Date().toISOString(), purpose: t("consensoScopo") || "utilita" };
+  if (get("scrittoDaPersona") === true) body.byPerson = true;
   return body;
 }
 
