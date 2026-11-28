@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.0 - 2026-11-28
+
+- Nuova operazione «Salva o rinomina un contatto nella rubrica del telefono» (gruppo Contatti e trattative): un flusso dà un nome a un contatto nella rubrica del telefono collegato con il QR code, per esempio quando arriva un lead da un modulo. Solo numeri collegati con il QR code.
+- Nuovo evento «Contatto salvato o rinominato nella rubrica del telefono» nell'attivatore.
+- Per aggiornare: Impostazioni › Nodi della community › «Aggiorna», poi ricarica l'editor. I flussi già salvati continuano a funzionare.
+
 ## 0.9.0 - 2026-11-23
 
 - Nuova opzione «Scritto Da Una Persona» in «Invia a un numero»: se il testo l'ha scritto a mano un operatore, per esempio da un CRM, l'agente AI va in pausa in quella chat come quando scrivi dal portale.
