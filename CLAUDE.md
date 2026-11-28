@@ -21,6 +21,9 @@ npm run lint       # n8n-node lint (stesse regole della verifica n8n)
 
 1. Copia `nodes/` e `credentials/` aggiornati dal monorepo.
 2. Alza la versione in `package.json` e aggiungi la voce in `CHANGELOG.md`.
-3. `git tag vX.Y.Z && git push --tags`: GitHub Actions (`.github/workflows/publish.yml`) pubblica con `npm publish --provenance` tramite Trusted Publishing (OIDC, configurato su npmjs.com per repo `IvanLaoMarketing/n8n-nodes-risveglia` e workflow `publish.yml`): nessun token né segreto.
+3. Pubblicazione, due strade equivalenti:
+   - da Claude o dal pannello GitHub: Actions › «Publish to npm» › Run workflow su main con `version` = X.Y.Z (pubblica e crea il tag vX.Y.Z);
+   - `git tag vX.Y.Z && git push --tags`.
+   In entrambi i casi GitHub Actions (`.github/workflows/publish.yml`) pubblica con `npm publish --provenance` tramite Trusted Publishing (OIDC, configurato su npmjs.com per repo `IvanLaoMarketing/n8n-nodes-risveglia` e workflow `publish.yml`): nessun token né segreto.
 
 La provenance serve per la verifica n8n (Creator Portal) e per l'installazione su n8n Cloud.
