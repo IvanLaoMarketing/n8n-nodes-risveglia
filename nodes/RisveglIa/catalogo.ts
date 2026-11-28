@@ -194,6 +194,16 @@ export const operazioni = [
     "binary": false
   },
   {
+    "id": "rubrica.salva",
+    "method": "PUT",
+    "path": "/v2/rubrica",
+    "scope": "crm:write",
+    "group": "Contatti e trattative",
+    "title": "Salva o rinomina un contatto nella rubrica del telefono (solo QR code)",
+    "idempotent": false,
+    "binary": false
+  },
+  {
     "id": "promemoria.crea",
     "method": "POST",
     "path": "/v2/reminders",
@@ -743,5 +753,9 @@ export const eventi = [
   {
     "value": "agent.handoff",
     "name": "L'agente AI passa la chat a una persona"
+  },
+  {
+    "value": "contact.saved",
+    "name": "Contatto salvato o rinominato nella rubrica del telefono"
   }
 ] as const;
